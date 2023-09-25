@@ -55,54 +55,102 @@ class MyAppState extends ChangeNotifier {
 }
 
 class MyHomePage extends StatelessWidget {
-  // The build method rebuilds the widget tree when the state changes
+  // Build the MyHomePage widget when the state changes
+  @override
+  Widget build(BuildContext context) {
+    // Scaffold is a widget from the Material library that provides
+    // many useful features like a AppBar, Drawer, and more
+    return Scaffold(
+      // Row is a widget that displays its children in a horizontal array
+      body: Row(
+        children: [
+          SafeArea(
+            child: NavigationRail(
+              extended: false,
+              destinations: [
+                NavigationRailDestination(
+                  icon: Icon(Icons.home),
+                  label: Text('Home'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.favorite),
+                  label: Text('Favorites'),
+                ),
+              ],
+              selectedIndex: 0,
+              onDestinationSelected: (value) {
+                print('selected: $value');
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: GeneratorPage(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GeneratorPage extends StatelessWidget {
+  // Build the GeneratorPage widget when the state changes
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
 
-    // Scaffold is a widget that provides a default app bar, title, and a body
-    return Scaffold(
-      // Center is a widget that centers its child
-      body: Center(
-        // Column is a widget that displays its children in a vertical array
-        // Columns contains a Row element, this way you get a grid like layout
-        child: Column(
-          // MainAxisAlignment.center centers the children vertically
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // See BigCard widget below
-            BigCard(pair: pair),
-            // SizedBox is a widget that displays an empty box for spacing elements
-            SizedBox(height: 20),
-            // Row is a widget that displays its children in a horizontal array
-            Row(
-              // MainAxisSize.min sets the size of the Row to the minimum size,
-              // this way the Row will only take up as much space as it needs
-              // and not the whole width of the screen.
-              mainAxisSize: MainAxisSize.min,
-              // This row contains 2 buttons:
-              children: [
-                // Next button
-                ElevatedButton(
-                  onPressed: () {
-                    appState.getNext();
-                  },
-                  child: Text('Next'),
-                ),
-                // Space buttons apart horizontally with SizedBox
-                SizedBox(width: 10),
-                // Like button
-                ElevatedButton(
-                  onPressed: () {
-                    appState.toggleFavorite();
-                  },
-                  child: Text('Like'),
-                ),
-              ],
-            ),
-          ],
-        ),
+    // If the current WordPair is in the favorites array, then the icon is
+    // filled, otherwise the icon is not filled
+    IconData icon;
+    if (appState.favorites.contains(pair)) {
+      icon = Icons.favorite;
+    } else {
+      icon = Icons.favorite_border;
+    }
+
+    // Center is a widget that centers its child
+    return Center(
+      // Column is a widget that displays its children in a vertical array
+      child: Column(
+        // MainAxisAlignment.center centers the children vertically
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // See BigCard class below
+          BigCard(pair: pair),
+          // Separate the BigCard and the buttons with a SizedBox (empty space)
+          SizedBox(height: 10),
+          // Row is a widget that displays its children in a horizontal array
+          Row(
+            // MainAxisSize.min makes the row only as big as its children
+            mainAxisSize: MainAxisSize.min,
+            // Row contains 2 buttons separated by a SizedBox
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  appState.toggleFavorite();
+                },
+                // `icon` is the icon to display which toggles in the
+                // toggleFavorite function above in the MyAppState class
+                icon: Icon(icon),
+                label: Text('Like'),
+              ),
+              SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  // `getNext` gets the next WordPair in the next() function
+                  // above in the MyAppState class
+                  appState.getNext();
+                },
+                // `child` is the widget to display in the button which is
+                // a Text widget with the text 'Next'
+                child: Text('Next'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
