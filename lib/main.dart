@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
         break;
       case 1:
-        page = Placeholder();
+        page = FavoritesPage();
         break;
       default:
         // Trow an error if the index is invalid
@@ -135,6 +135,28 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class FavoritesPage extends StatelessWidget {
+  // Build the GeneratorPage widget when the state changes
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
+    // If the current WordPair is in the favorites array, then the icon is
+    // filled, otherwise the icon is not filled
+    IconData icon;
+
+    // Center is a widget that centers its child
+    return Center(
+      // Column is a widget that displays its children in a vertical array
+      child: Column(
+        // MainAxisAlignment.center centers the children vertically
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [],
       ),
     );
   }
