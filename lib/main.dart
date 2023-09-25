@@ -66,17 +66,40 @@ class MyHomePage extends StatelessWidget {
       // Center is a widget that centers its child
       body: Center(
         // Column is a widget that displays its children in a vertical array
+        // Columns contains a Row element, this way you get a grid like layout
         child: Column(
           // MainAxisAlignment.center centers the children vertically
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // See BigCard widget below
             BigCard(pair: pair),
+            // SizedBox is a widget that displays an empty box for spacing elements
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                appState.getNext();
-              },
-              child: Text('Next'),
+            // Row is a widget that displays its children in a horizontal array
+            Row(
+              // MainAxisSize.min sets the size of the Row to the minimum size,
+              // this way the Row will only take up as much space as it needs
+              // and not the whole width of the screen.
+              mainAxisSize: MainAxisSize.min,
+              // This row contains 2 buttons:
+              children: [
+                // Next button
+                ElevatedButton(
+                  onPressed: () {
+                    appState.getNext();
+                  },
+                  child: Text('Next'),
+                ),
+                // Space buttons apart horizontally with SizedBox
+                SizedBox(width: 10),
+                // Like button
+                ElevatedButton(
+                  onPressed: () {
+                    appState.toggleFavorite();
+                  },
+                  child: Text('Like'),
+                ),
+              ],
             ),
           ],
         ),
@@ -87,11 +110,17 @@ class MyHomePage extends StatelessWidget {
 
 // A stateless widget that displays a WordPair on a "big" card
 class BigCard extends StatelessWidget {
+  // BigCard constructor
   const BigCard({
+    // `super.key` is a special property that is used to identify widgets
     super.key,
+    // `required` means that the variable must be set when the widget is created
+    // BigCard requires a WordPair to be passed in
     required this.pair,
   });
 
+  // The WordPair to display on the card
+  // `final` means that the value of the variable cannot change after it is set
   final WordPair pair;
 
   // Rebuild the BigCard widget when the state changes
