@@ -63,26 +63,43 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       // Row is a widget that displays its children in a horizontal array
       body: Row(
+        // The children of the Row are a NavigationRail and a Container
         children: [
+          // SafeArea is a widget that insets its child by enough to avoid
+          // the status bar, notches, holes in the display, and other
+          // intrusions on the display
           SafeArea(
+            // NavigationRail is a widget that provides a navigation rail
             child: NavigationRail(
               extended: false,
+              // destinations is an array of NavigationRailDestinations
               destinations: [
+                // NavigationRailDestination is a widget that provides a
+                // destination to the NavigationRail
+                // Destination Home:
                 NavigationRailDestination(
                   icon: Icon(Icons.home),
                   label: Text('Home'),
                 ),
+                // Destination Favorites:
                 NavigationRailDestination(
                   icon: Icon(Icons.favorite),
                   label: Text('Favorites'),
                 ),
               ],
+              // `selectedIndex` is the index of the currently selected
+              // NavigationRailDestination
               selectedIndex: 0,
+              // `onDestinationSelected` is a function that is called when
+              // a NavigationRailDestination is selected
+              // It prints the selected value to the console
               onDestinationSelected: (value) {
                 print('selected: $value');
               },
             ),
           ),
+          // Expanded is a widget that expands its child to fill the available
+          // space in the main axis direction
           Expanded(
             child: Container(
               color: Theme.of(context).colorScheme.primaryContainer,
