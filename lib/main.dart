@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         title: 'First Flutter App',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
         ),
         home: MyHomePage(),
       ),
@@ -67,10 +67,22 @@ class BigCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var style = theme.textTheme.displaySmall!.copyWith(
+      color: theme.colorScheme.onPrimary,
+    );
+
     return Card(
+      color: theme.colorScheme.primary,
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Text(pair.asPascalCase),
+        child: Text(
+          pair.asPascalCase,
+          style: style,
+          // `semanticsLabel` is for accessibility like screen readers to be
+          // able to separate the words when all is in lower case:
+          semanticsLabel: pair.asPascalCase,
+        ),
       ),
     );
   }
