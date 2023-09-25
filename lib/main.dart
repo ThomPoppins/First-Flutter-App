@@ -54,10 +54,35 @@ class MyAppState extends ChangeNotifier {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  // MyHomePage state constructor
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+// _MyHomePageState is a private class that is only accessible in this file
+// The _ClassName starting with an underscore is used to denote a private class
+// It is a stateful widget that can change over time
+class _MyHomePageState extends State<MyHomePage> {
+  var selectedIndex = 0;
+
   // Build the MyHomePage widget when the state changes
   @override
   Widget build(BuildContext context) {
+    // Initialize and set the page to display as a Widget
+    Widget page;
+    switch (selectedIndex) {
+      case 0:
+        page = GeneratorPage();
+        break;
+      case 1:
+        page = Placeholder();
+        break;
+      default:
+        // Trow an error if the index is invalid
+        throw UnimplementedError('Invalid index: $selectedIndex');
+    }
+
     // Scaffold is a widget from the Material library that provides
     // many useful features like a AppBar, Drawer, and more
     return Scaffold(
@@ -67,7 +92,8 @@ class MyHomePage extends StatelessWidget {
         children: [
           // SafeArea is a widget that insets its child by enough to avoid
           // the status bar, notches, holes in the display, and other
-          // intrusions on the display
+          // intrusions on the display like a status bar and camera on top
+          // of the screen if it's needed
           SafeArea(
             // NavigationRail is a widget that provides a navigation rail
             child: NavigationRail(
@@ -89,12 +115,14 @@ class MyHomePage extends StatelessWidget {
               ],
               // `selectedIndex` is the index of the currently selected
               // NavigationRailDestination
-              selectedIndex: 0,
+              selectedIndex: selectedIndex,
               // `onDestinationSelected` is a function that is called when
               // a NavigationRailDestination is selected
               // It prints the selected value to the console
               onDestinationSelected: (value) {
-                print('selected: $value');
+                setState(() {
+                  selectedIndex = value;
+                });
               },
             ),
           ),
@@ -103,7 +131,7 @@ class MyHomePage extends StatelessWidget {
           Expanded(
             child: Container(
               color: Theme.of(context).colorScheme.primaryContainer,
-              child: GeneratorPage(),
+              child: page,
             ),
           ),
         ],
