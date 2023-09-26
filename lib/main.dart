@@ -52,6 +52,11 @@ class MyAppState extends ChangeNotifier {
     // Notify listeners that the favorites array has changed
     notifyListeners();
   }
+
+  void removeFavorite(WordPair pair) {
+    favorites.remove(pair);
+    notifyListeners();
+  }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -141,23 +146,35 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class FavoritesPage extends StatelessWidget {
-  // Build the GeneratorPage widget when the state changes
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
 
-    // If the current WordPair is in the favorites array, then the icon is
-    // filled, otherwise the icon is not filled
-    IconData icon;
+    if (appState.favorites.isEmpty) {
+      return Center(
+        child: Text('No favorites yet.'),
+      );
+    }
 
-    // Center is a widget that centers its child
-    return Center(
-      // Column is a widget that displays its children in a vertical array
-      child: Column(
-        // MainAxisAlignment.center centers the children vertically
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [],
-      ),
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Text('You have '
+              '${appState.favorites.length} favorites:'),
+        ),
+        for (var pair in appState.favorites)
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text(pair.asPascalCase),
+            trailing: IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                appState.removeFavorite(pair);
+              },
+            ),
+          ),
+      ],
     );
   }
 }
