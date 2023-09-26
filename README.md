@@ -2,7 +2,9 @@
 
 My first Flutter application. Build by following [this tutorial](https://codelabs.developers.google.com/codelabs/flutter-codelab-first#0) from Google Codelabs.
 
-**Personal note**: According to Google, Flutter is inspired by the functional programming (kind of) way of building up the UI from components inside components. In Flutter this would be Widgets inside of Widgets. This is a interesting approach for me to work with because I already am very much used to the React way of building the component and passing state data from parent to child and this way of building up the complete UI is easily to adopt in Flutter. 
+## Personal note about Flutter
+
+According to Google, Flutter is inspired by the functional programming (kind of) way of building up the UI from components inside components. In Flutter this would be Widgets inside of Widgets. This is a interesting approach for me to work with because I already am very much used to the React way of building the component and passing state data from parent to child and this way of building up the complete UI is easily to adopt in Flutter. 
 
 The only thing I need to learn is all Flutter syntax and learn all possible widgets to use to get my mobile application up-to-date with the MERN stack web application for the browser found in my MERN_STACK_PROJ. repository. I want all functionalities implemented in MERN_STACK_PROJ. also in a Flutter application so the user can also use it's Android or iPhone to login and edit/register companies (and much more later) and I want the Flutter app to work with the same database as the web application so the phone app will always be in sync with the web app.
 
